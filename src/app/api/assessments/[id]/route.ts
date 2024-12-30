@@ -8,10 +8,8 @@ const UpdateAssessmentSchema = z.object({
   score: z.number().min(0).max(100).nullable(),
 })
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(request: NextRequest, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
     const id = parseInt(params.id, 10)
     const body = await request.json()
